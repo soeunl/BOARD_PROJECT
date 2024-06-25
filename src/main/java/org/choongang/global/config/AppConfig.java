@@ -11,9 +11,10 @@ import java.util.ResourceBundle;
  */
 public class AppConfig {
     private final static ResourceBundle bundle;
-    private final static Map<String, String> configs;
+    private final static Map<String, String> configs; // 설정들을 모두 MAP 형태로 가공해서 넣음
     static {
         // 환경 변수 mode에 따라 설정파일을 분리 예) prod이면 application-prod.properties로 읽어온다.
+        // 각 pc마다 설정이 다를 수 있기 때문임
         String mode = System.getenv("mode");
         mode = mode == null || mode.isBlank() ? "":"-" + mode;
 
@@ -29,5 +30,5 @@ public class AppConfig {
 
     public static String get(String key) {
         return configs.get(key);
-    }
+    } // 설정들을 key 값을 활용해 조회
 }
