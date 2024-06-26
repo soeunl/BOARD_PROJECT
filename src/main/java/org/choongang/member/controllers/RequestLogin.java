@@ -7,4 +7,5 @@ public class RequestLogin { // 양식에 있는 값과 동일하면 알아서 �
     private String email;
     private String password;
     private boolean saveEmail;
+    private String redirectUrl;
 }
