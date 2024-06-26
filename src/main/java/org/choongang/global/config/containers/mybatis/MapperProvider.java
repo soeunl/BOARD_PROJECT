@@ -20,6 +20,9 @@ public class MapperProvider { // 멤버 경로를 스캔해서 객체를 생성�
     }
 
     public <T> T getMapper(Class clz) {
+        if(!clz.isInterface()) {
+            return null;
+        }
 
         MapperScan mapperScan = getClass().getAnnotation(MapperScan.class);
         boolean isMapper = Arrays.stream(mapperScan.value()).anyMatch(s -> s.startsWith(clz.getPackageName()));

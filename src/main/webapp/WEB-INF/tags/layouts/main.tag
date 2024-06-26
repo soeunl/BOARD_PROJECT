@@ -24,21 +24,33 @@
                 </div>
                 <div class="right">
                     <util:guestOnly>
-<%--                            비회원일때만 나오도록 처리--%>
-                    <a href="<c:url value='/member/join' />">
-                        <i class="xi-user-plus-o"></i>
-                        <fmt:message key="회원가입" />
-                    </a>
-                    <a href="<c:url value='/member/login' />">
-                        <i class="xi-log-in"></i>
-                        <fmt:message key="로그인" />
-                        </util:guestOnly>
-                        <util:memberOnly>
-                            <a href = "<c:url value='/mypage' />">
-                                <fmt:message key="마이페이지" />
+                        <a href="<c:url value='/member/join' />">
+                            <i class="xi-user-plus-o"></i>
+                            <fmt:message key="회원가입" />
+                        </a>
+                        <a href="<c:url value='/member/login' />">
+                            <i class="xi-log-in"></i>
+                            <fmt:message key="로그인" />
+                        </a>
+                    </util:guestOnly>
+                    <util:memberOnly>
+                        <fmt:message key="LOGIN_MSG">
+                            <fmt:param>${loggedMember.userName}</fmt:param>
+                            <fmt:param>${loggedMember.email}</fmt:param>
+                        </fmt:message>
+                        <a href="<c:url value='/mypage' />">
+                            <fmt:message key="마이페이지" />
+                        </a>
+                        <a href="<c:url value='/member/logout' />">
+                            <fmt:message key="로그아웃" />
+                        </a>
+                        <c:if test="${isAdmin}">
+                            <a href="<c:url value="/admin" /> " target="_blank">
+                                <fmt:message key="사이트_관리" />
+<%--                                관리자--%>
                             </a>
-                        </util:memberOnly>
-                    </a>
+                        </c:if>
+                    </util:memberOnly>
                 </div>
             </div>
         </section>
@@ -61,17 +73,17 @@
         </section>
         <nav>
             <div class="layout-width inner">
-                <a href="#">메뉴1</a>
-                <a href="#">메뉴2</a>
-                <a href="#">메뉴3</a>
-                <a href="#">메뉴4</a>
-                <a href="#">메뉴5</a>
+                <a href="#">소식</a>
+                <a href="#">게임</a>
+                <a href="#">게시판</a>
+                <a href="#">애니매이션</a>
+                <a href="#">상품</a>
             </div>
         </nav>
     </jsp:attribute>
     <jsp:attribute name="footer">
         <section class="layout-width inner">
-            메인 레이아웃 하단 영역
+            메인 레이아웃 하단 영역!
         </section>
     </jsp:attribute>
     <jsp:attribute name="commonCss">
