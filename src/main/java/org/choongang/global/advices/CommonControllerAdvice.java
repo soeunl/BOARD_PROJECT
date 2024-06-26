@@ -28,7 +28,7 @@ public class CommonControllerAdvice {
 
         if (e instanceof CommonException commonException) {
             int status = commonException.getStatus();
-            response.setStatus(status);
+            response.setStatus(status); // 응답코드 추가를 위해 commonException에 정의했습니다
 
             StringBuffer sb = new StringBuffer(1000);
             if (e instanceof AlertException) {
@@ -51,6 +51,9 @@ public class CommonControllerAdvice {
                 request.setAttribute("script", sb.toString());
                 return "commons/execute_script";
             }
+        } else {
+            // CommonException으로 정의한 예외가 아닌 경우 - 응답코드 500으로 처리
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
 
 

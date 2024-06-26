@@ -22,11 +22,11 @@
                     </a>
                 </div>
                 <div class="right">
-                    <a href="<c:url value='/member/user/join' />">
+                    <a href="<c:url value='/member/join' />">
                         <i class="xi-user-plus-o"></i>
                         <fmt:message key="회원가입" />
                     </a>
-                    <a href="<c:url value='/member/user/login' />">
+                    <a href="<c:url value='/member/login' />">
                         <i class="xi-log-in"></i>
                         <fmt:message key="로그인" />
                     </a>
