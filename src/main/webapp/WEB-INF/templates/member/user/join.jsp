@@ -4,7 +4,7 @@
 <%@ taglib prefix="layout" tagdir="/WEB-INF/tags/layouts" %>
 <fmt:setBundle basename="messages.commons" />
 <fmt:message var="pageTitle" key='회원가입' /> <%--페이지 상단 제목을 회원가입으로 나오게 함--%>
-<c:url var="actionUrl" value="/member/join" />
+<c:url var="actionUrl" value="/member/user/join" />
 
 <layout:main title="${pageTitle}">
     <section class="content-box">
