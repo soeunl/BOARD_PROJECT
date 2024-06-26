@@ -5,6 +5,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.choongang.global.advices.HandlerControllerAdvice;
 import org.choongang.global.config.annotations.*;
 import org.choongang.global.config.containers.BeanContainer;
@@ -91,48 +92,50 @@ public class HandlerAdapterImpl implements HandlerAdapter {
         /* 메서드 매개변수 의존성 주입 처리 S */
         List<Object> args = new ArrayList<>();
         for (Parameter param : method.getParameters()) {
-                Class cls = param.getType();
-                String paramValue = null;
-                for (Annotation pa : param.getDeclaredAnnotations()) {
-                    if (pa instanceof RequestParam requestParam) { // 요청 데이터 매칭
-                        String paramName = requestParam.value();
-                        paramValue = request.getParameter(paramName);
-                        break;
-                    } else if (pa instanceof PathVariable pathVariable) { // 경로 변수 매칭
-                        String pathName = pathVariable.value();
-                        paramValue = pathVariables.get(pathName);
-                        break;
-                    }
+            Class cls = param.getType();
+            String paramValue = null;
+            for (Annotation pa : param.getDeclaredAnnotations()) {
+                if (pa instanceof RequestParam requestParam) { // 요청 데이터 매칭
+                    String paramName = requestParam.value();
+                    paramValue = request.getParameter(paramName);
+                    break;
+                } else if (pa instanceof PathVariable pathVariable) { // 경로 변수 매칭
+                    String pathName = pathVariable.value();
+                    paramValue = pathVariables.get(pathName);
+                    break;
                 }
+            }
 
-                if (cls == int.class || cls == Integer.class || cls == long.class || cls == Long.class || cls == double.class || cls == Double.class ||  cls == float.class || cls == Float.class) {
-                    paramValue = paramValue == null || paramValue.isBlank()?"0":paramValue;
-                }
+            if (cls == int.class || cls == Integer.class || cls == long.class || cls == Long.class || cls == double.class || cls == Double.class || cls == float.class || cls == Float.class) {
+                paramValue = paramValue == null || paramValue.isBlank() ? "0" : paramValue;
+            }
 
-                if (cls == HttpServletRequest.class) {
-                    args.add(request);
-                } else if (cls == HttpServletResponse.class) {
-                    args.add(response);
-                } else if (cls == int.class) {
-                    args.add(Integer.parseInt(paramValue));
-                } else if (cls == Integer.class) {
-                    args.add(Integer.valueOf(paramValue));
-                } else if (cls == long.class) {
-                    args.add(Long.parseLong(paramValue));
-                } else if (cls == Long.class) {
-                    args.add(Long.valueOf(paramValue));
-                } else if (cls == float.class) {
-                    args.add(Float.parseFloat(paramValue));
-                } else if (cls == Float.class) {
-                    args.add(Float.valueOf(paramValue));
-                } else if (cls == double.class) {
-                    args.add(Double.parseDouble(paramValue));
-                } else if (cls == Double.class) {
-                    args.add(Double.valueOf(paramValue));
-                } else if (cls == String.class) {
-                    // 문자열인 경우
-                    args.add(paramValue);
-                } else {
+            if (cls == HttpServletRequest.class) {
+                args.add(request);
+            } else if (cls == HttpServletResponse.class) {
+                args.add(response);
+            } else if (cls == HttpSession.class) {
+                args.add(BeanContainer.getInstance().getBean(HttpSession.class));
+            } else if (cls == int.class) {
+                args.add(Integer.parseInt(paramValue));
+            } else if (cls == Integer.class) {
+                args.add(Integer.valueOf(paramValue));
+            } else if (cls == long.class) {
+                args.add(Long.parseLong(paramValue));
+            } else if (cls == Long.class) {
+                args.add(Long.valueOf(paramValue));
+            } else if (cls == float.class) {
+                args.add(Float.parseFloat(paramValue));
+            } else if (cls == Float.class) {
+                args.add(Float.valueOf(paramValue));
+            } else if (cls == double.class) {
+                args.add(Double.parseDouble(paramValue));
+            } else if (cls == Double.class) {
+                args.add(Double.valueOf(paramValue));
+            } else if (cls == String.class) {
+                // 문자열인 경우
+                args.add(paramValue);
+            } else {
                     // 기타는 setter를 체크해 보고 요청 데이터를 주입
                     // 동적 객체 생성
                     Object paramObj = cls.getDeclaredConstructors()[0].newInstance();
@@ -174,6 +177,14 @@ public class HandlerAdapterImpl implements HandlerAdapter {
             String json = om.writeValueAsString(result);
             PrintWriter out = response.getWriter();
             out.print(json);
+            return;
+        }
+
+        // 일반 컨트롤러인 경우 문자열이 redirect:로 시작하면 페이지 이동
+        String returnValue = (String)result;
+        if (returnValue.startsWith("redirect:")) {
+            String redirectUrl = returnValue.replace("redirect:", request.getContextPath());
+            response.sendRedirect(redirectUrl);
             return;
         }
 

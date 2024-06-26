@@ -1,6 +1,7 @@
 package org.choongang.member.controllers;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.choongang.global.config.annotations.Controller;
 import org.choongang.global.config.annotations.GetMapping;
@@ -60,5 +61,12 @@ public class MemberController {
 //        원하는 주소로 이동
 
         return "commons/execute_script";
+    }
+
+    @RequestMapping("/logout") // get 방식이든 post 방식이든 모든 요청방식을 허용하면서 로그아웃
+        public String logout(HttpSession session) {
+            session.invalidate(); // 세션 비우기 : 로그아웃
+
+            return "redirect:/member/login"; // 페이지 이동 response.sendRedirect(..)
     }
 }
