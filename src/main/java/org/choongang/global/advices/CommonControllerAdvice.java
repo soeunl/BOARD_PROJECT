@@ -7,7 +7,7 @@ import org.choongang.global.config.annotations.ControllerAdvice;
 import org.choongang.global.config.annotations.ModelAttribute;
 import org.choongang.global.exceptions.*;
 import org.choongang.member.entities.Member;
-import org.choongang.member.validators.MemberUtil;
+import org.choongang.member.MemberUtil;
 
 @RequiredArgsConstructor
 @ControllerAdvice("org.choongang")

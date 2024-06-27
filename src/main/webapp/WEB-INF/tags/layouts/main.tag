@@ -76,7 +76,7 @@
                 <a href="#">소식</a>
                 <a href="#">게임</a>
                 <a href="#">게시판</a>
-                <a href="#">애니매이션</a>
+                <a href="#">애니메이션</a>
                 <a href="#">상품</a>
             </div>
         </nav>
