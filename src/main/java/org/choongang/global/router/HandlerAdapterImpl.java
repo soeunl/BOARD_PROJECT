@@ -73,7 +73,7 @@ public class HandlerAdapterImpl implements HandlerAdapter {
                 for (String rUrl : rootUrls) {
                     String _url = request.getContextPath() + rUrl + url;
                     for (String s : matched) {
-                        _url = _url.replace("{" + s + "}", "(\\w*)");
+                        _url = _url.replace("{" + s + "}", "([^/]+)/?");
                     }
 
                     Pattern p2 = Pattern.compile("^" + _url+"$");
@@ -106,8 +106,8 @@ public class HandlerAdapterImpl implements HandlerAdapter {
                 }
             }
 
-            if (cls == int.class || cls == Integer.class || cls == long.class || cls == Long.class || cls == double.class || cls == Double.class || cls == float.class || cls == Float.class) {
-                paramValue = paramValue == null || paramValue.isBlank() ? "0" : paramValue;
+            if (cls == int.class || cls == Integer.class || cls == long.class || cls == Long.class || cls == double.class || cls == Double.class ||  cls == float.class || cls == Float.class) {
+                paramValue = paramValue == null || paramValue.isBlank()?"0":paramValue;
             }
 
             if (cls == HttpServletRequest.class) {
@@ -136,26 +136,26 @@ public class HandlerAdapterImpl implements HandlerAdapter {
                 // 문자열인 경우
                 args.add(paramValue);
             } else {
-                    // 기타는 setter를 체크해 보고 요청 데이터를 주입
-                    // 동적 객체 생성
-                    Object paramObj = cls.getDeclaredConstructors()[0].newInstance();
-                    for (Method _method : cls.getDeclaredMethods()) {
-                        String name = _method.getName();
-                        if (!name.startsWith("set")) continue;
+                // 기타는 setter를 체크해 보고 요청 데이터를 주입
+                // 동적 객체 생성
+                Object paramObj = cls.getDeclaredConstructors()[0].newInstance();
+                for (Method _method : cls.getDeclaredMethods()) {
+                    String name = _method.getName();
+                    if (!name.startsWith("set")) continue;
 
-                        char[] chars = name.replace("set", "").toCharArray();
-                        chars[0] = Character.toLowerCase(chars[0]);
-                        name = String.valueOf(chars);
-                        String value = request.getParameter(name);
-                        if (value == null) continue;
+                    char[] chars = name.replace("set", "").toCharArray();
+                    chars[0] = Character.toLowerCase(chars[0]);
+                    name = String.valueOf(chars);
+                    String value = request.getParameter(name);
+                    if (value == null) continue;
 
 
-                        Class clz = _method.getParameterTypes()[0];
-                        // 자료형 변환 후 메서드 호출 처리
-                        invokeMethod(paramObj,_method, value, clz, name);
-                    }
-                    args.add(paramObj);
-                } // endif
+                    Class clz = _method.getParameterTypes()[0];
+                    // 자료형 변환 후 메서드 호출 처리
+                    invokeMethod(paramObj,_method, value, clz, name);
+                }
+                args.add(paramObj);
+            } // endif
         }
         /* 메서드 매개변수 의존성 주입 처리 E */
 
@@ -163,8 +163,7 @@ public class HandlerAdapterImpl implements HandlerAdapter {
 
         // controller 적용 범위  Advice 처리
         boolean isContinue = handlerControllerAdvice.handle(controller);
-        if (!isContinue) {
-            // 컨트롤러 메서드 실행 X
+        if (!isContinue) { // 컨트롤러 메서드 실행 X
             return;
         }
 
@@ -300,6 +299,6 @@ public class HandlerAdapterImpl implements HandlerAdapter {
             return mapping.value();
         }
 
-        return null;
+        return new String[] {""};
     }
 }

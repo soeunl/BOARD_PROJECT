@@ -25,11 +25,11 @@ public class LoginValidator implements Validator<RequestLogin>, RequiredValidato
         int status = HttpServletResponse.SC_BAD_REQUEST;
 
         // 필수 항목 검증 - 이메일, 비밀번호
-        checkRequired(email, new AlertException("이메일을 입력하세요", status));
-        checkRequired(password, new AlertException("비밀번호를 입력하세요", status));
+        checkRequired(email, new AlertException("이메일을 입력하세요.", status));
+        checkRequired(password, new AlertException("비밀번호를 입력하세요.", status));
 
         // 가입된 회원인지 체크
-        String message = "이메일 또는 비밀번호가 일치하지 않습니다";
+        String message = "이메일 또는 비밀번호가 일치하지 않습니다.";
         Member member = mapper.get(email);
         checkTrue(member != null, new AlertException(message, status));
 
