@@ -14,15 +14,15 @@
 
 <layout:common title="${title}">
     <jsp:attribute name="header">
-        <section class="site-top">
-            <div class="layout-width inner">
-                <div class="left">
-                    <a href="${homeUrl}">
-                        <i class="xi-home-o"></i>
-                        <fmt:message key="홈" />
-                    </a>
-                </div>
-                <div class="right">
+         <section class="site-top">
+             <div class="layout-width inner">
+                 <div class="left">
+                     <a href="${homeUrl}">
+                         <i class="xi-home-o"></i>
+                         <fmt:message key="홈" />
+                     </a>
+                 </div>
+                 <div class="right">
                     <util:guestOnly>
                         <a href="<c:url value='/member/join' />">
                             <i class="xi-user-plus-o"></i>
@@ -33,7 +33,7 @@
                             <fmt:message key="로그인" />
                         </a>
                     </util:guestOnly>
-                    <util:memberOnly>
+                     <util:memberOnly>
                         <fmt:message key="LOGIN_MSG">
                             <fmt:param>${loggedMember.userName}</fmt:param>
                             <fmt:param>${loggedMember.email}</fmt:param>
@@ -47,13 +47,13 @@
                         <c:if test="${isAdmin}">
                             <a href="<c:url value="/admin" /> " target="_blank">
                                 <fmt:message key="사이트_관리" />
-<%--                                관리자--%>
+                                    <%-- 관리자 --%>
                             </a>
                         </c:if>
                     </util:memberOnly>
-                </div>
-            </div>
-        </section>
+                 </div>
+             </div>
+         </section>
         <section class="logo-search">
             <div class="layout-width inner">
                 <div class="left">
@@ -61,6 +61,14 @@
                         <img src="${logoUrl}" alt="<fmt:message key='로고' />">
                     </a>
                 </div>
+                    <nav class="right">
+                        <div class="layout-width inner">
+                            <a href="#">도감</a>
+                            <a href="#">게시판</a>
+                            <a href="#">이미지</a>
+                            <a href="#">애니메이션</a>
+                        </div>
+                </nav>
                 <div class="right">
                     <form class="search-box" method="GET" action="${searchUrl}" autocomplete="off">
                         <input type="text" name="keyword" placeholder="<fmt:message key='검색어를_입력하세요.' />">
@@ -69,17 +77,11 @@
                         </button>
                     </form>
                 </div>
+                </div>
+
             </div>
         </section>
-        <nav>
-            <div class="layout-width inner">
-                <a href="#">소식</a>
-                <a href="#">게임</a>
-                <a href="#">게시판</a>
-                <a href="#">애니메이션</a>
-                <a href="#">상품</a>
-            </div>
-        </nav>
+
     </jsp:attribute>
     <jsp:attribute name="footer">
         <section class="layout-width inner">

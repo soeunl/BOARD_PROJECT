@@ -17,7 +17,7 @@ main {
 /* 사이드 주 메뉴 S */
 main > .side-menu {
     width: 210px;
-    background: #222;
+    background: #0e4bae;
 }
 
 main > .side-menu a {
@@ -31,12 +31,12 @@ main > .side-menu a {
 }
 
 main > .side-menu a + a {
-    border-top: 3px solid #444;
+    /*border-top: 3px solid #444;*/
 }
 
 main > .side-menu a:hover,
 main > .side-menu a.on {
-    background: #333;
+    background: #2d495b;
 }
 
 /* 사이드 주 메뉴 E */
@@ -76,8 +76,59 @@ nav.sub-menu a {
 }
 
 nav.sub-menu a:hover {
-    background: #333;
+    background: #2d495b;
     color: #fff;
 }
 
 /* 서브 메뉴 E */
+
+/* 테이블 공통  S */
+.table-cols {
+    border-spacing: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.table-cols th{
+    background: #fff;
+    color: black;
+}
+/* 테이블 공통 S */
+.table-cols {
+    border-spacing: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.table-cols th {
+    background: #f8f8f8;
+}
+
+.table-cols td {
+    background: #fff;
+}
+
+.table-cols th,
+.table-cols td {
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+}
+
+.table-cols tr:first-of-type th,
+.table-cols tr:first-of-type td {
+    border-top: 1px solid #ccc;
+}
+
+.table-cols textarea {
+    width: 100%;
+}
+/* 테이블 공통 E */
+
+/* 메세지 박스 */
+    .message {
+        font-size: 0.95rem;
+        font-weight: bold;
+        padding: 7px 15px;
+        box-shadow: 2px 2px 5px #333;
+        border-radius: 3px;
+}

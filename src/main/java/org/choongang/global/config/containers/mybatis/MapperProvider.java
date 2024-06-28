@@ -5,7 +5,7 @@ import org.choongang.global.config.annotations.mybatis.MapperScan;
 
 import java.util.Arrays;
 
-@MapperScan({"org.choongang.member.mappers"})
+@MapperScan({"org.choongang.member.mappers", "org.choongang.board.mappers"})
 public class MapperProvider { // 멤버 경로를 스캔해서 객체를 생성해준다
 
     public static MapperProvider instance;
