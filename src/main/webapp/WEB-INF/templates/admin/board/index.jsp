@@ -21,7 +21,7 @@
         <c:if test="${items != null && !items.isEmpty()}">
             <c:forEach var="item" items="${items}">
                 <tr>
-                    <td>${item.BId}</td>
+                    <td>${item.BID}</td>
                     <td>${item.BName}</td>
                     <td>
                         <a href="<c:url value='/admin/board/update/${item.BId}' />">
