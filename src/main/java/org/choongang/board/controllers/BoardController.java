@@ -39,6 +39,11 @@ public class BoardController {
     public String write(@PathVariable("bId") String bId) {
         commonProcess(bId, "write");
 
+        RequestBoardData data = new RequestBoardData();
+        data.setBId(bId);
+
+        request.setAttribute("data", data);
+
         return "board/write";
     }
 
@@ -67,7 +72,7 @@ public class BoardController {
 
         if (mode.equals("write") || mode.equals("update")) { // 쓰기, 수정
             addCss.add("board/form");
-            addScript.add("ckeditor5/ckeditor5");
+            addScript.add("ckeditor5/ckeditor");
             addScript.add("board/form");
 
         } else if (mode.equals("list")) { // 목록

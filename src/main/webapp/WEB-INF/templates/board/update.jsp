@@ -5,20 +5,20 @@
 <c:url var="actionUrl" value="/board/save" />
 <layout:main title="${board.BName}">
 
-    <section class="layout-width">
-        <jsp:include page="_header.jsp" />
+<section class="layout-width">
+    <jsp:include page="_header.jsp" />
 
-        <form name="frmSave" method="POST" action="${actionUrl}" target="ifrmProcess" autocomplete="off">
-            <input type="hidden" name="mode" value="update">
+    <form name="frmSave" method="POST" action="${actionUrl}" target="ifrmProcess" autocomplete="off">
+        <input type="hidden" name="mode" value="update">
 
-            <jsp:include page="_form.jsp" />
+        <jsp:include page="_form.jsp" />
 
-            <div class="button-group">
-                <button type="reset">다시입력</button>
-                <button type="submit">글수정</button>
-            </div>
-        </form>
+        <div class="button-group">
+            <button type="reset">다시입력</button>
+            <button type="submit">글수정</button>
+        </div>
+    </form>
 
-    </section>
+</section>
 
 </layout:main>

@@ -8,7 +8,7 @@ import java.util.UUID;
 public class RequestBoardData {
     private String mode;
     private long seq;
-    private String bid;
+    private String bId;
     private String gId = UUID.randomUUID().toString();
     private String category;
     private String poster;
